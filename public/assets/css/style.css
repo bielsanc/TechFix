@@ -1,0 +1,250 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Tahoma", "Segoe UI", Geneva, Verdana, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #ece9d8;
+}
+
+/* JANELA OCUPANDO A TELA TODA */
+.janela {
+    width: 100vw;
+    height: 100vh;
+    background: #ece9d8;
+    border: 3px solid #ffffff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* BARRA DE TÍTULO WINDOWS XP */
+.barra-titulo {
+    height: 32px;
+    background: #0a246a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+    font-weight: bold;
+    font-size: 14px;
+    text-shadow: 1px 1px 1px #000;
+}
+
+.titulo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.titulo img {
+    width: 18px;
+    height: 18px;
+}
+
+.botoes-janela {
+    display: flex;
+    gap: 3px;
+}
+
+.botoes-janela button {
+    width: 23px;
+    height: 23px;
+    background: #fff;
+    border: 1px solid #cac7c7;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: inset -1px -1px 1px rgba(0,0,0,0.4);
+}
+
+.botoes-janela .fechar {
+    background:  #b81602;
+    color: white;
+    border-color: #df7265;
+}
+
+/* CONTEÚDO COM PAISAGEM XP COMPLETA NO FUNDO */
+.conteudo {
+    flex: 1;
+    display: flex;
+    background-image: url('../imagens/fundoxp.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* LADO ESQUERDO */
+.lado-esquerdo {
+    width: 50%;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.logo-principal {
+    width: 85%;
+    max-width: 480px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.4));
+}
+
+/* LADO DIREITO */
+.login-container {
+    width: 50%;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 480px;
+    background: #ece9d8;
+    border: 2px solid;
+    border-color: #fff #808080 #808080 #fff;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.login-titulo {
+    height: 34px;
+    background: #0a246a;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.login-conteudo {
+    padding: 25px 30px;
+}
+
+.mensagem {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    font-size: 13px;
+}
+
+.mensagem img {
+    width: 38px;
+    height: 38px;
+}
+
+.campo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.campo label {
+    width: 85px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.campo input {
+    flex: 1;
+    height: 28px;
+    border: 2px solid;
+    border-color: #7f9db9 #b0cae0 #b0cae0 #7f9db9;
+    padding: 2px 8px;
+    font-size: 13px;
+    background: #fff;
+}
+
+.lembrar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 85px;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+.entrar-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-entrar {
+    height: 34px;
+    padding: 0 20px;
+    background: #ece9d8;
+    border: 2px solid;
+    border-color: #fff #808080 #808080 #fff;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-entrar:active {
+    border-color: #808080 #fff #fff #808080;
+}
+
+.btn-entrar span {
+    color: #008000;
+    font-size: 16px;
+}
+
+hr {
+    margin: 18px 0;
+    border: none;
+    border-top: 1px solid #808080;
+    border-bottom: 1px solid #fff;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.links a {
+    color: #0000ff;
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+.links a:hover {
+    color: #ff0000;
+}
+
+/* RODAPÉ */
+.status-bar {
+    height: 26px;
+    background: #ece9d8;
+    border-top: 2px solid;
+    border-color: #808080 #fff #fff #808080;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    font-size: 12px;
+    color: #000;
+}
+
+.conectado {
+    border-left: 1px solid #808080;
+    padding-left: 12px;
+}
