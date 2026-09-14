@@ -74,10 +74,13 @@
                         <img src="{{ asset('assets/imagens/interrogacao.png') }}" alt="Ajuda" class="icon-nav">
                         Ajuda
                     </a>
-                    <a href="{{ url('/login') }}" class="nav-item sair">
-                        <img src="{{ asset('assets/imagens/saida.png') }}" alt="Sair" class="icon-nav">
-                        Sair
-                    </a>
+                    <form action="{{ url('/logout') }}" method="POST" class="nav-item sair" style="border:0; background:none; padding:0;">
+                        @csrf
+                        <button type="submit" style="all:unset; display:flex; align-items:center; gap:8px; cursor:pointer;">
+                            <img src="{{ asset('assets/imagens/saida.png') }}" alt="Sair" class="icon-nav">
+                            Sair
+                        </button>
+                    </form>
                 </nav>
             </div>
 
@@ -87,8 +90,8 @@
                 <!-- CABEÇALHO BOAS-VINDAS -->
                 <div class="header-boas-vindas">
                     <div class="info-usuario">
-                        <strong>Bem-vindo, admin!</strong>
-                        <span>Data: 25/05/2026 - 10:45</span>
+                        <strong>Bem-vindo, {{ auth()->user()->name }}!</strong>
+                        <span>Data: {{ now()->format('d/m/Y - H:i') }}</span>
                     </div>
                     <img src="{{ asset('assets/imagens/ampulheta.png') }}" alt="Aguardando" class="icon-ampulheta">
                 </div>
@@ -96,19 +99,19 @@
                 <!-- CARDS DE METRICAS -->
                 <div class="cards-grid">
                     <div class="card-metrica">
-                        <span class="numero azul">12</span>
+                        <span class="numero azul">{{ str_pad($abertas, 2, '0', STR_PAD_LEFT) }}</span>
                         <span class="rotulo">Ordens Abertas</span>
                     </div>
                     <div class="card-metrica">
-                        <span class="numero amarelo">05</span>
+                        <span class="numero amarelo">{{ str_pad($andamento, 2, '0', STR_PAD_LEFT) }}</span>
                         <span class="rotulo">Em Andamento</span>
                     </div>
                     <div class="card-metrica">
-                        <span class="numero verde">18</span>
+                        <span class="numero verde">{{ str_pad($concluidasMes, 2, '0', STR_PAD_LEFT) }}</span>
                         <span class="rotulo">Finalizadas (Mês)</span>
                     </div>
                     <div class="card-metrica">
-                        <span class="numero vermelho">02</span>
+                        <span class="numero vermelho">{{ str_pad($aguardandoPecas, 2, '0', STR_PAD_LEFT) }}</span>
                         <span class="rotulo">Aguardando Peças</span>
                     </div>
                 </div>
@@ -134,41 +137,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>00019</td>
-                                        <td>Carlos Alberto</td>
-                                        <td>Notebook Dell</td>
-                                        <td><span class="badge azul">Em atendimento</span></td>
-                                        <td>25/05/2026</td>
-                                    </tr>
-                                    <tr>
-                                        <td>00018</td>
-                                        <td>Juliana Silva</td>
-                                        <td>PC Montado</td>
-                                        <td><span class="badge amarelo">Aguard. Peças</span></td>
-                                        <td>24/05/2026</td>
-                                    </tr>
-                                    <tr>
-                                        <td>20017</td>
-                                        <td>Marcos Paulo</td>
-                                        <td>Impressora HP</td>
-                                        <td><span class="badge cinza">Aberta</span></td>
-                                        <td>24/05/2026</td>
-                                    </tr>
-                                    <tr>
-                                        <td>00016</td>
-                                        <td>Ana Carolina</td>
-                                        <td>Notebook Acer</td>
-                                        <td><span class="badge verde">Concluída</span></td>
-                                        <td>23/05/2026</td>
-                                    </tr>
-                                    <tr>
-                                        <td>00015</td>
-                                        <td>João Pedro</td>
-                                        <td>PC Gamer</td>
-                                        <td><span class="badge verde">Concluída</span></td>
-                                        <td>22/05/2026</td>
-                                    </tr>
+                                    @forelse ($recentes as $os)
+                                        <tr>
+                                            <td>{{ $os->numero }}</td>
+                                            <td>{{ $os->cliente_nome }}</td>
+                                            <td>{{ $os->tipo_equipamento }} {{ $os->marca }}</td>
+                                            <td>
+                                                @php
+                                                    $classe = match($os->status) {
+                                                        'Em andamento' => 'azul',
+                                                        'Aguardando Peças' => 'amarelo',
+                                                        'Concluída' => 'verde',
+                                                        default => 'cinza',
+                                                    };
+                                                @endphp
+                                                <span class="badge {{ $classe }}">{{ $os->status }}</span>
+                                            </td>
+                                            <td>{{ optional($os->data_entrada)->format('d/m/Y') }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5">Nenhuma ordem de serviço cadastrada ainda.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -180,14 +171,14 @@
                             <span>Atalhos Rápidos</span>
                         </div>
                         <div class="caixa-body atalhos-list">
-                            <button class="btn-atalho">
+                            <a href="{{ url('/ordem') }}" class="btn-atalho">
                                 <img src="{{ asset('assets/imagens/papel.png') }}" alt="Nova OS" class="icon-btn">
                                 Nova Ordem de Serviço
-                            </button>
-                            <button class="btn-atalho">
+                            </a>
+                            <a href="{{ url('/cadastro') }}" class="btn-atalho">
                                 <img src="{{ asset('assets/imagens/user.png') }}" alt="Cliente" class="icon-btn">
-                                Cadastrar Cliente
-                            </button>
+                                Cadastrar Usuário
+                            </a>
                             <button class="btn-atalho">
                                 <img src="{{ asset('assets/imagens/pc.png') }}" alt="Equipamento" class="icon-btn">
                                 Cadastrar Equipamento

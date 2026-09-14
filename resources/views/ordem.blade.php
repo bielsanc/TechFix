@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('assets/css/ordem.css') }}">
-    <title>TechFix - Ordem de Serviço Nº 00020</title>
+    <title>TechFix - Ordem de Serviço Nº {{ $numero }}</title>
 </head>
 <body>
 
@@ -14,7 +14,7 @@
         <div class="barra-titulo">
             <div class="titulo">
                 <img src="{{ asset('assets/imagens/logoTech.png') }}" alt="TechFix">
-                <span>TechFix - Ordem de Serviço Nº 00020</span>
+                <span>TechFix - Ordem de Serviço Nº {{ $numero }}</span>
             </div>
             <div class="botoes-janela">
                 <button>−</button>
@@ -82,8 +82,19 @@
 
             <!-- PAINEL CENTRAL DA ORDEM DE SERVIÇO -->
             <div class="painel-principal">
-                
-                <form class="os-container">
+
+                @if ($errors->any())
+                    <div class="erros-form" style="color:#c0392b; margin-bottom:10px;">
+                        <ul>
+                            @foreach ($errors->all() as $erro)
+                                <li>{{ $erro }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form class="os-container" action="{{ url('/ordem') }}" method="POST" id="form-ordem">
+                    @csrf
 
                     <!-- LINHA 1: DADOS DO CLIENTE E DADOS DO EQUIPAMENTO -->
                     <div class="grid-2col">
@@ -93,16 +104,15 @@
                             <legend>Dados do Cliente</legend>
                             <div class="campo campo-busca">
                                 <label for="cliente">Cliente:</label>
-                                <input type="text" id="cliente" name="cliente" value="Juliana Silva">
-                                <button type="button" class="btn-buscar">...</button>
+                                <input type="text" id="cliente" name="cliente" value="{{ old('cliente') }}" required>
                             </div>
                             <div class="campo">
                                 <label for="telefone">Telefone:</label>
-                                <input type="text" id="telefone" name="telefone" value="(11) 91234-5678">
+                                <input type="text" id="telefone" name="telefone" value="{{ old('telefone') }}">
                             </div>
                             <div class="campo">
                                 <label for="email">E-mail:</label>
-                                <input type="email" id="email" name="email" value="juliana@email.com">
+                                <input type="email" id="email" name="email" value="{{ old('email') }}">
                             </div>
                         </fieldset>
 
@@ -113,37 +123,31 @@
                                 <div class="campo">
                                     <label for="tipo">Tipo:</label>
                                     <select id="tipo" name="tipo">
-                                        <option value="Notebook" selected>Notebook</option>
-                                        <option value="Desktop">Desktop</option>
-                                        <option value="Impressora">Impressora</option>
+                                        <option value="Notebook" {{ old('tipo') == 'Notebook' ? 'selected' : '' }}>Notebook</option>
+                                        <option value="Desktop" {{ old('tipo') == 'Desktop' ? 'selected' : '' }}>Desktop</option>
+                                        <option value="Impressora" {{ old('tipo') == 'Impressora' ? 'selected' : '' }}>Impressora</option>
                                     </select>
                                 </div>
                                 <div class="campo">
                                     <label for="marca">Marca:</label>
-                                    <select id="marca" name="marca">
-                                        <option value="Lenovo" selected>Lenovo</option>
-                                        <option value="Dell">Dell</option>
-                                        <option value="HP">HP</option>
-                                    </select>
+                                    <input type="text" id="marca" name="marca" value="{{ old('marca') }}">
                                 </div>
                             </div>
 
                             <div class="linha-dupla">
                                 <div class="campo">
                                     <label for="modelo">Modelo:</label>
-                                    <select id="modelo" name="modelo">
-                                        <option value="Ideapad 3" selected>Ideapad 3</option>
-                                    </select>
+                                    <input type="text" id="modelo" name="modelo" value="{{ old('modelo') }}">
                                 </div>
                                 <div class="campo">
                                     <label for="serie">Nº de Série:</label>
-                                    <input type="text" id="serie" name="serie" value="PF1X2Y3Z">
+                                    <input type="text" id="serie" name="serie" value="{{ old('serie') }}">
                                 </div>
                             </div>
 
                             <div class="campo">
                                 <label for="acessorios">Acessórios:</label>
-                                <input type="text" id="acessorios" name="acessorios" value="Carregador, Mouse">
+                                <input type="text" id="acessorios" name="acessorios" value="{{ old('acessorios') }}">
                             </div>
                         </fieldset>
 
@@ -155,7 +159,7 @@
                         <!-- DESCRIÇÃO DO PROBLEMA -->
                         <fieldset class="grupo-campos flex-col">
                             <legend>Descrição do Problema</legend>
-                            <textarea name="descricao_problema" class="textarea-problema">Notebook não liga. Cliente relatou que desligou normalmente e no dia seguinte não ligou mais.</textarea>
+                            <textarea name="descricao_problema" class="textarea-problema">{{ old('descricao_problema') }}</textarea>
                         </fieldset>
 
                         <!-- SERVIÇOS EXECUTADOS / PEÇAS -->
@@ -169,26 +173,17 @@
                                             <th class="col-valor">Valor (R$)</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="corpo-itens">
                                         <tr>
-                                            <td>Diagnóstico</td>
-                                            <td class="col-valor">50,00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Substituição da Fonte</td>
-                                            <td class="col-valor">150,00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Limpeza Interna</td>
-                                            <td class="col-valor">80,00</td>
+                                            <td><input type="text" name="itens_descricao[]" placeholder="Ex: Diagnóstico"></td>
+                                            <td class="col-valor"><input type="number" step="0.01" min="0" name="itens_valor[]" class="input-valor-item" value="0"></td>
                                         </tr>
                                     </tbody>
                                 </table>
 
                                 <div class="botoes-tabela">
-                                    <button type="button" class="btn-tb verde" title="Adicionar">+</button>
-                                    <button type="button" class="btn-tb vermelho" title="Remover">−</button>
-                                    <button type="button" class="btn-tb" title="Editar">✏️</button>
+                                    <button type="button" id="btn-add-item" class="btn-tb verde" title="Adicionar">+</button>
+                                    <button type="button" id="btn-remove-item" class="btn-tb vermelho" title="Remover última linha">−</button>
                                 </div>
                             </div>
                         </fieldset>
@@ -202,35 +197,33 @@
                                 <div class="campo">
                                     <label for="status">Status:</label>
                                     <select id="status" name="status">
-                                        <option value="Em andamento" selected>Em andamento</option>
-                                        <option value="Concluída">Concluída</option>
-                                        <option value="Aguardando Peças">Aguardando Peças</option>
+                                        <option value="Aberta" {{ old('status', 'Aberta') == 'Aberta' ? 'selected' : '' }}>Aberta</option>
+                                        <option value="Em andamento" {{ old('status') == 'Em andamento' ? 'selected' : '' }}>Em andamento</option>
+                                        <option value="Concluída" {{ old('status') == 'Concluída' ? 'selected' : '' }}>Concluída</option>
+                                        <option value="Aguardando Peças" {{ old('status') == 'Aguardando Peças' ? 'selected' : '' }}>Aguardando Peças</option>
                                     </select>
                                 </div>
                                 <div class="campo">
                                     <label for="data_entrada">Data de Entrada:</label>
-                                    <input type="text" id="data_entrada" name="data_entrada" value="25/05/2026" class="input-data">
+                                    <input type="text" id="data_entrada" name="data_entrada" value="{{ old('data_entrada', now()->format('d/m/Y')) }}" class="input-data" placeholder="dd/mm/aaaa">
                                 </div>
                             </div>
 
                             <div class="linha-controles">
                                 <div class="campo">
                                     <label for="tecnico">Técnico Responsável:</label>
-                                    <select id="tecnico" name="tecnico">
-                                        <option value="Carlos" selected>Carlos</option>
-                                        <option value="Beatriz">Beatriz</option>
-                                    </select>
+                                    <input type="text" id="tecnico" name="tecnico" value="{{ old('tecnico', auth()->user()->name) }}">
                                 </div>
                                 <div class="campo">
                                     <label for="previsao_entrega">Previsão de Entrega:</label>
-                                    <input type="text" id="previsao_entrega" name="previsao_entrega" value="27/05/2026" class="input-data">
+                                    <input type="text" id="previsao_entrega" name="previsao_entrega" value="{{ old('previsao_entrega') }}" class="input-data" placeholder="dd/mm/aaaa">
                                 </div>
                             </div>
                         </div>
 
                         <div class="bloco-total">
                             <span class="label-total">Total:</span>
-                            <span class="valor-total">R$ 280,00</span>
+                            <span class="valor-total" id="valor-total-display">R$ 0,00</span>
                         </div>
                     </div>
 
@@ -263,6 +256,48 @@
         </div>
 
     </div>
+
+    <script>
+        const corpoItens = document.getElementById('corpo-itens');
+        const totalDisplay = document.getElementById('valor-total-display');
+
+        function linhaItem() {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" name="itens_descricao[]" placeholder="Ex: Diagnóstico"></td>
+                <td class="col-valor"><input type="number" step="0.01" min="0" name="itens_valor[]" class="input-valor-item" value="0"></td>
+            `;
+            return tr;
+        }
+
+        function recalcularTotal() {
+            const valores = document.querySelectorAll('.input-valor-item');
+            let total = 0;
+            valores.forEach(input => {
+                total += parseFloat(input.value || 0);
+            });
+            totalDisplay.textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+        }
+
+        document.getElementById('btn-add-item').addEventListener('click', function () {
+            corpoItens.appendChild(linhaItem());
+        });
+
+        document.getElementById('btn-remove-item').addEventListener('click', function () {
+            if (corpoItens.rows.length > 1) {
+                corpoItens.deleteRow(-1);
+                recalcularTotal();
+            }
+        });
+
+        corpoItens.addEventListener('input', function (e) {
+            if (e.target.classList.contains('input-valor-item')) {
+                recalcularTotal();
+            }
+        });
+
+        recalcularTotal();
+    </script>
 
 </body>
 </html>

@@ -46,19 +46,26 @@
                             <span>Informe seu usuário e senha para entrar.</span>
                         </div>
 
-                        <!-- FORMULÁRIO DIRECIONANDO PARA O DASHBOARD -->
-                        <form action="{{ url('/dashboard') }}" method="GET">
-                            
+                        @if ($errors->any())
+                            <div class="erro-login" style="color:#c0392b; margin-bottom:10px;">
+                                {{ $errors->first() }}
+                            </div>
+                        @endif
+
+                        <!-- FORMULÁRIO DE LOGIN -->
+                        <form action="{{ url('/login') }}" method="POST">
+                            @csrf
+
                             <!-- USUÁRIO -->
                             <div class="campo">
                                 <label for="usuario">Usuário:</label>
-                                <input type="text" id="usuario" name="usuario" value="usuario" required>
+                                <input type="text" id="usuario" name="usuario" value="{{ old('usuario') }}" required autofocus>
                             </div>
 
                             <!-- SENHA -->
                             <div class="campo">
                                 <label for="senha">Senha:</label>
-                                <input type="password" id="senha" name="senha" value="12345678" required>
+                                <input type="password" id="senha" name="senha" required>
                             </div>
 
                             <!-- LEMBRAR -->
