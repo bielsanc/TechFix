@@ -36,54 +36,7 @@
         <!-- CONTEÚDO PRINCIPAL -->
         <div class="conteudo">
 
-            <!-- SIDEBAR ESQUERDA -->
-            <div class="sidebar">
-                <div class="logo-area">
-                    <img src="{{ asset('assets/imagens/logoTech.png') }}" alt="TechFix Logo" class="logo-sidebar">
-                </div>
-
-                <nav class="nav-menu">
-                    <a href="#" class="nav-item active">
-                        <img src="{{ asset('assets/imagens/casa.png') }}" alt="Dashboard" class="icon-nav">
-                        Dashboard
-                    </a>
-                    <a href="{{ url('/ordem') }}" class="nav-item">
-                        <img src="{{ asset('assets/imagens/papel.png') }}" alt="Clientes" class="icon-nav">
-                        Ordem de Serviços
-                    </a>
-                    <a href="{{ url('/clientes') }}" class="nav-item">
-                        <img src="{{ asset('assets/imagens/user.png') }}" alt="Clientes" class="icon-nav">
-                        Clientes
-                    </a>
-                    <a href="#" class="nav-item">
-                        <img src="{{ asset('assets/imagens/pc.png') }}" alt="Equipamentos" class="icon-nav">
-                        Equipamentos
-                    </a>
-                    <a href="{{ route('relatorios') }}" class="nav-item">
-                        <img src="{{ asset('assets/imagens/graficos.png') }}" alt="Relatórios" class="icon-nav">
-                        Relatórios
-                    </a>
-                    <a href="#" class="nav-item">
-                        <img src="{{ asset('assets/imagens/dinheiro.png') }}" alt="Financeiro" class="icon-nav">
-                        Financeiro
-                    </a>
-                    <a href="#" class="nav-item">
-                        <img src="{{ asset('assets/imagens/engrenagem.png') }}" alt="Configurações" class="icon-nav">
-                        Configurações
-                    </a>
-                    <a href="#" class="nav-item">
-                        <img src="{{ asset('assets/imagens/interrogacao.png') }}" alt="Ajuda" class="icon-nav">
-                        Ajuda
-                    </a>
-                    <form action="{{ url('/logout') }}" method="POST" class="nav-item sair" style="border:0; background:none; padding:0;">
-                        @csrf
-                        <button type="submit" style="all:unset; display:flex; align-items:center; gap:8px; cursor:pointer;">
-                            <img src="{{ asset('assets/imagens/saida.png') }}" alt="Sair" class="icon-nav">
-                            Sair
-                        </button>
-                    </form>
-                </nav>
-            </div>
+            @include('partials.sidebar', ['ativo' => 'dashboard'])
 
             <!-- PAINEL PRINCIPAL -->
             <div class="painel-principal">

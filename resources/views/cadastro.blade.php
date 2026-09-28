@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/cadastro.css') }}">
     <title>TechFix - Cadastro de Usuário</title>
 </head>
@@ -26,7 +27,10 @@
         <!-- CONTEÚDO PRINCIPAL -->
         <div class="conteudo">
 
-            <div class="cadastro-wrapper">
+            @include('partials.sidebar', ['ativo' => 'cadastro'])
+
+            <main class="painel-principal cadastro-painel">
+                <div class="cadastro-wrapper">
                 
                 <!-- BRANDING CENTRALIZADO ACIMA -->
                 <div class="branding-topo">
@@ -146,7 +150,9 @@
 
                 </form>
 
-            </div>
+                </div>
+            </main>
+
 
         </div>
 

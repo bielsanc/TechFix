@@ -34,51 +34,7 @@
         <!-- CONTEÚDO PRINCIPAL (SIDEBAR + PAINEL DA OS) -->
         <div class="conteudo">
 
-            <!-- SIDEBAR ESQUERDA -->
-            <aside class="sidebar">
-                <div class="logo-area">
-                    <img src="{{ asset('assets/imagens/logoTech.png') }}" alt="TechFix Logo" class="logo-sidebar">
-                </div>
-
-                <nav class="nav-menu">
-                    <a href="{{ url('/dashboard') }}" class="nav-item">
-                        <img src="{{ asset('assets/imagens/casa.png') }}" alt="Dashboard" class="icon-nav">
-                        <span>Dashboard</span>
-                    </a>
-                    <a href="{{ url('/ordem') }}" class="nav-item active">
-                        <img src="{{ asset('assets/imagens/papel.png') }}" alt="Ordens de Serviço" class="icon-nav">
-                        <span>Ordens de Serviço</span>
-                    </a>
-                    <a href="{{ url('/cadastro') }}" class="nav-item">
-                        <img src="{{ asset('assets/imagens/user.png') }}" alt="Clientes" class="icon-nav">
-                        <span>Clientes</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <img src="{{ asset('assets/imagens/pc.png') }}" alt="Equipamentos" class="icon-nav">
-                        <span>Equipamentos</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <img src="{{ asset('assets/imagens/graficos.png') }}" alt="Relatórios" class="icon-nav">
-                        <span>Relatórios</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <img src="{{ asset('assets/imagens/dinheiro.png') }}" alt="Financeiro" class="icon-nav">
-                        <span>Financeiro</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <img src="{{ asset('assets/imagens/engrenagem.png') }}" alt="Configurações" class="icon-nav">
-                        <span>Configurações</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <img src="{{ asset('assets/imagens/interrogacao.png') }}" alt="Ajuda" class="icon-nav">
-                        <span>Ajuda</span>
-                    </a>
-                    <a href="{{ url('/login') }}" class="nav-item sair">
-                        <img src="{{ asset('assets/imagens/sair.png') }}" alt="Sair" class="icon-nav">
-                        <span>Sair</span>
-                    </a>
-                </nav>
-            </aside>
+            @include('partials.sidebar', ['ativo' => 'ordem'])
 
             <!-- PAINEL CENTRAL DA ORDEM DE SERVIÇO -->
             <div class="painel-principal">

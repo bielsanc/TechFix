@@ -241,3 +241,19 @@ body {
     border-left: 1px solid #808080;
     padding-left: 12px;
 }
+/* Mantém o menu compartilhado e coloca o formulário no painel principal. */
+.conteudo {
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 0;
+    background-image: none;
+    overflow: hidden;
+}
+
+.cadastro-painel {
+    align-items: center;
+    justify-content: center;
+    background-image: url('../imagens/fundoxp.png');
+    background-size: cover;
+    background-position: center;
+}
