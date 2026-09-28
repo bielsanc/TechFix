@@ -246,6 +246,28 @@ body {
     flex: 1;
 }
 
+/* CAIXA DO GRÁFICO */
+.caixa-grafico {
+    flex: 2;
+    background: #ece9d8;
+    border: 2px solid;
+    border-color: #fff #808080 #808080 #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.area-grafico {
+    background: #ffffff;
+    border: 2px solid;
+    border-color: #7f9db9 #b0cae0 #b0cae0 #7f9db9;
+    margin: 10px;
+    padding: 10px;
+    flex: 1;
+    position: relative;
+    min-height: 240px;
+}
+
+/* TABELA DE ORDENS */
 .caixa-tabela {
     flex: 3;
     background: #ece9d8;
@@ -341,6 +363,8 @@ th {
     display: flex;
     align-items: center;
     gap: 8px;
+    text-decoration: none;
+    color: #000;
 }
 
 .icon-btn {
@@ -370,4 +394,17 @@ th {
 .conectado {
     border-left: 1px solid #808080;
     padding-left: 12px;
+}
+.relatorios-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    flex: 1;
+    min-height: 360px;
+}
+
+.relatorios-grid .caixa-grafico { min-width: 0; }
+
+@media (max-width: 900px) {
+    .relatorios-grid { grid-template-columns: 1fr; }
 }

@@ -11,6 +11,7 @@ class DashboardController extends Controller
         $abertas = OrdemServico::where('status', 'Aberta')->count();
         $andamento = OrdemServico::where('status', 'Em andamento')->count();
         $aguardandoPecas = OrdemServico::where('status', 'Aguardando Peças')->count();
+        $concluidas = OrdemServico::where('status', 'Concluída')->count();
         $concluidasMes = OrdemServico::where('status', 'Concluída')
             ->whereMonth('updated_at', now()->month)
             ->whereYear('updated_at', now()->year)
@@ -22,6 +23,7 @@ class DashboardController extends Controller
             'abertas' => $abertas,
             'andamento' => $andamento,
             'concluidasMes' => $concluidasMes,
+            'concluidas' => $concluidas,
             'aguardandoPecas' => $aguardandoPecas,
             'recentes' => $recentes,
         ]);

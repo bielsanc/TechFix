@@ -1,0 +1,107 @@
+/* Complementos da tela de Consulta de Clientes (usa dashboard.css como base) */
+
+.cards-grid.tres {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.card-metrica .numero.valor {
+    font-size: 26px;
+}
+
+.caixa-tabela.consulta {
+    flex: 1;
+}
+
+.caixa-header .contagem {
+    font-size: 11px;
+    font-weight: normal;
+}
+
+.form-busca {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.form-busca label {
+    font-weight: bold;
+}
+
+.form-busca input[type="text"] {
+    flex: 1;
+    max-width: 380px;
+    height: 24px;
+    padding: 0 6px;
+    font-size: 12px;
+    border: 2px solid;
+    border-color: #7f9db9 #b0cae0 #b0cae0 #7f9db9;
+    background: #fff;
+}
+
+.btn-xp {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+    text-decoration: none;
+    background: #ece9d8;
+    border: 2px solid;
+    border-color: #fff #808080 #808080 #fff;
+    cursor: pointer;
+}
+
+.btn-xp:active {
+    border-color: #808080 #fff #fff #808080;
+}
+
+.btn-xp.desativado {
+    color: #808080;
+    cursor: default;
+}
+
+th.centro, td.centro { text-align: center; }
+th.direita, td.direita { text-align: right; }
+
+tbody tr:hover {
+    background: #316ac5;
+    color: #fff;
+}
+
+tbody tr:hover .link-os {
+    color: #fff;
+}
+
+.link-os {
+    color: #0033cc;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.link-os:hover {
+    text-decoration: underline;
+}
+
+td.vazio {
+    text-align: center;
+    padding: 20px;
+    color: #444;
+}
+
+tbody tr:has(td.vazio):hover {
+    background: #fff;
+    color: #444;
+}
+
+.paginacao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+    font-size: 12px;
+}

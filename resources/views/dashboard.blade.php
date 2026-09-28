@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
     <title>TechFix - Dashboard</title>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -49,16 +51,15 @@
                         <img src="{{ asset('assets/imagens/papel.png') }}" alt="Clientes" class="icon-nav">
                         Ordem de Serviços
                     </a>
-                  <a href="{{ url('/cadastro') }}"  class="nav-item">
+                    <a href="{{ url('/clientes') }}" class="nav-item">
                         <img src="{{ asset('assets/imagens/user.png') }}" alt="Clientes" class="icon-nav">
                         Clientes
                     </a>
-                    
                     <a href="#" class="nav-item">
                         <img src="{{ asset('assets/imagens/pc.png') }}" alt="Equipamentos" class="icon-nav">
                         Equipamentos
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="{{ route('relatorios') }}" class="nav-item">
                         <img src="{{ asset('assets/imagens/graficos.png') }}" alt="Relatórios" class="icon-nav">
                         Relatórios
                     </a>
@@ -118,6 +119,16 @@
 
                 <!-- SEÇÃO INFERIOR -->
                 <div class="painel-inferior">
+
+                    <!-- CAIXA DO GRÁFICO -->
+                    <div class="caixa-grafico">
+                        <div class="caixa-header">
+                            <span>Visão Geral dos Status</span>
+                        </div>
+                        <div class="area-grafico">
+                            <canvas id="graficoStatus"></canvas>
+                        </div>
+                    </div>
 
                     <!-- TABELA DE ORDENS DE SERVIÇO -->
                     <div class="caixa-tabela">
@@ -183,10 +194,10 @@
                                 <img src="{{ asset('assets/imagens/pc.png') }}" alt="Equipamento" class="icon-btn">
                                 Cadastrar Equipamento
                             </button>
-                            <button class="btn-atalho">
+                            <a href="{{ route('relatorios') }}" class="btn-atalho">
                                 <img src="{{ asset('assets/imagens/graficos.png') }}" alt="Relatório" class="icon-btn">
                                 Relatório de OS
-                            </button>
+                            </a>
                             <button class="btn-atalho">
                                 <img src="{{ asset('assets/imagens/salvar.png') }}" alt="Backup" class="icon-btn">
                                 Backup do Sistema
@@ -207,6 +218,53 @@
         </div>
 
     </div>
+
+    <!-- SCRIPT DO GRÁFICO -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('graficoStatus').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Abertas', 'Em Andamento', 'Concluídas', 'Aguardando Peças'],
+                    datasets: [{
+                        label: 'Quantidade',
+                        data: [
+                            {{ $abertas }},
+                            {{ $andamento }},
+                            {{ $concluidas }},
+                            {{ $aguardandoPecas }}
+                        ],
+                        backgroundColor: [
+                            '#0033cc',
+                            '#cc9900',
+                            '#008000',
+                            '#cc0000'
+                        ],
+                        borderColor: '#000000',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { precision: 0, font: { family: 'Tahoma' } }
+                        },
+                        x: {
+                            ticks: { font: { family: 'Tahoma' } }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
